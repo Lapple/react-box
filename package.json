@@ -1,0 +1,29 @@
+{
+  "name": "react-box",
+  "version": "1.0.0",
+  "description": "Wraps repeatedly rerendered components preserving their nodes in real DOM to reduce paints",
+  "main": "box.js",
+  "scripts": {
+    "dev": "http-server . & watchify example/app.js -o example/app.compiled.js -v & wait"
+  },
+  "author": {
+    "name": "Aziz Yuldoshev",
+    "email": "yuldoshev.aziz@gmail.com",
+    "url": "http://lapple.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Lapple/react-box.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-component"
+  ],
+  "dependencies": {
+    "react": "^0.12.1"
+  },
+  "devDependencies": {
+    "http-server": "^0.7.4",
+    "watchify": "^2.1.1"
+  }
+}
