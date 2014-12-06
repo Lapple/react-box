@@ -1,6 +1,6 @@
 {
   "name": "react-box",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wraps repeatedly rerendered components preserving their nodes in real DOM to reduce paints",
   "main": "box.js",
   "scripts": {
