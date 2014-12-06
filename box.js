@@ -27,7 +27,7 @@ module.exports = React.createClass({
         this.readChildren(p.children);
     },
     render: function() {
-        return D.div(null,
+        return D.div({ className: this.props.className },
             keys(this.state.cache).map(this.renderCacheItem));
     },
     renderCacheItem: function(key) {
