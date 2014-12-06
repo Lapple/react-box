@@ -6,17 +6,25 @@ var keys = Object.keys;
 module.exports = React.createClass({
     getInitialState: function() {
         return {
-            cache: []
+            cache: [],
+            hash: generateHashFunction(this.props.hashFunction)
         };
     },
+    getDefaultProps: function() {
+        return {
+            hashFunction: function(child) {
+                return JSON.stringify({
+                    key: child.key,
+                    props: child.props
+                });
+            }
+        };
+    },
+    componentDidMount: function() {
+        this.readChildren(this.props.children);
+    },
     componentWillReceiveProps: function(p) {
-        var cache = this.state.cache;
-
-        React.Children.forEach(p.children, function(child) {
-            cache[signature(child)] = child;
-        });
-
-        this.setState({ cache: cache });
+        this.readChildren(p.children);
     },
     render: function() {
         return D.div(null,
@@ -26,29 +34,37 @@ module.exports = React.createClass({
         return D.div({ style: { display: this.visibility(key) ? 'block' : 'none' }, key: key },
             this.state.cache[key]);
     },
+    readChildren: function(children) {
+        var cache = this.state.cache;
+
+        React.Children.forEach(children, function(child) {
+            cache[this.state.hash(child)] = child;
+        }, this);
+
+        this.setState({ cache: cache });
+    },
     visibility: function(key) {
         var c = React.Children.map(this.props.children, function(child) {
-            return key === signature(child);
-        });
+            return key === this.state.hash(child);
+        }, this);
 
         return c ? values(c).some(isTrue) : false;
     }
 });
 
-var ref = {};
-var index = 0;
+function generateHashFunction(hashFunction) {
+    var ref = {};
+    var index = 0;
 
-function signature(child) {
-    var key = JSON.stringify({
-        key: child.key,
-        props: child.props
-    });
+    return function(child) {
+        var key = hashFunction(child);
 
-    if (!ref[key]) {
-        ref[key] = String(++index);
-    }
+        if (!ref[key]) {
+            ref[key] = String(++index);
+        }
 
-    return ref[key];
+        return ref[key];
+    };
 }
 
 function isTrue(value) {
