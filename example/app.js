@@ -1,4 +1,5 @@
 var React = require('react');
+var render = require('react-dom').render;
 var D = React.DOM;
 
 var Box = require('../box.js');
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var index = -1;
 
     setInterval(function() {
-        React.render(
+        render(
             app(states[++index % states.length]),
             document.getElementById('app'));
     }, 500);

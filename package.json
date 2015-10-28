@@ -19,11 +19,12 @@
   "keywords": [
     "react-component"
   ],
-  "dependencies": {
-    "react": "^0.12.1"
+  "peerDependencies": {
+    "react": "^0.14.0"
   },
   "devDependencies": {
     "http-server": "^0.7.4",
+    "react-dom": "0.14.0",
     "watchify": "^2.1.1"
   }
 }
